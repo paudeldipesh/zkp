@@ -1,19 +1,21 @@
-use rand::{rngs::ThreadRng, thread_rng, Rng};
 use sha256::digest;
 
 fn main() {
-    // Hashing
-    let input: String = String::from("hello");
-    let value: String = digest(input);
-    assert_eq!(
-        value,
-        "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
-    );
+    let secret: String = "Dipesh78".to_string();
+    let hashed_secret: String = hash_secret(secret);
+    let expected_secret: String = "Dipesh78".to_string();
+    check_secret(hashed_secret, expected_secret);
+}
 
-    // Random number
-    let mut rng: ThreadRng = thread_rng();
-    let random_number: u32 = rng.gen_range(1..=100);
-    println!("Random number: {}", random_number);
+fn hash_secret(secret: String) -> String {
+    digest(secret)
+}
 
-    println!("Success!");
+fn check_secret(hashed_secret: String, expected_secret: String) {
+    let hashed_expected_secret: String = digest(expected_secret);
+    if hashed_expected_secret == hashed_secret {
+        println!("Yes")
+    } else {
+        println!("No")
+    }
 }
